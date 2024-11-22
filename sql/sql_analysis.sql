@@ -33,7 +33,7 @@ ORDER BY CASE
 END;
 
 
--- Same as above but outputs % split also (ChatGPT)
+-- Same as above but outputs % split also
 WITH BmiCategories AS (
     SELECT
         *,
@@ -154,7 +154,7 @@ ORDER BY
         WHEN physical_activity_level = 'Very Active' THEN 3
         WHEN physical_activity_level = 'Extremely Active' THEN 4
         WHEN physical_activity_level = 'Unknown' THEN 5
-END;
+    END;
 
     
 -- Hypertension Prevalence Among Diabetic Patients
