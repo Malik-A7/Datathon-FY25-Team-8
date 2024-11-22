@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/o.israel-bolarinwa/OneDrive - Accenture/Documents/Datathon/datathon_database.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="150"/><column_width id="3" width="3644"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,9:mainage_group"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="age_group" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="122"/><column index="2" value="61"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="diet_type" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort><column index="2" mode="1"/></sort><column_widths/><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="age_group.sql">create table age_group as
+
+select age_group, 
+
+ROW_NUMBER() 
+
+OVER(order by (
+
+case when age_group = '18-34' then 0 
+
+when age_group = '35-49' then 1
+
+when age_group = '50-64' then 2
+
+when age_group = '65-79' then 3
+
+when age_group = '&gt;80' then 4
+
+else 5 end)) as id
+
+from 
+
+(select distinct(age_group) from diabetes)</sql><sql name="alcohol_consumption.sql">create table alcohol_consumption as
+
+select alcohol_consumption, 
+
+ROW_NUMBER() 
+
+OVER(order by (
+
+case when alcohol_consumption = 'Unknown' then 0 
+
+when alcohol_consumption = 'none' then 1
+
+when alcohol_consumption = 'light' then 2
+
+when alcohol_consumption = 'moderate' then 3
+
+when alcohol_consumption = 'heavy' then 4
+
+else 5 end)) as id
+
+from 
+
+(select distinct(alcohol_consumption) from diabetes)</sql><sql name="diet_type.sql">create table diet_type as
+
+select diet_type, ROW_NUMBER() OVER(order by diet_type) as id
+
+from 
+
+(select distinct(diet_type) from diabetes)
+
+
+</sql><sql name="gender.sql">create table gender as
+
+
+select gender, ROW_NUMBER() OVER(order by gender) as id
+
+from 
+
+(select distinct(gender) from diabetes)
+
+
+</sql><sql name="physical_activity_level.sql">create table physical_activity_level as
+
+select physical_activity_level, 
+
+ROW_NUMBER() 
+
+OVER(order by (
+
+case when physical_activity_level = 'Unknown' then 0 
+
+when physical_activity_level = 'Sedentary' then 1
+
+when physical_activity_level = 'Lightly Active' then 2
+
+when physical_activity_level = 'Moderately Active' then 3
+
+when physical_activity_level = 'Very Active' then 4
+
+when physical_activity_level = 'Extremely Active' then 5
+
+else 6 end)) as id
+
+from 
+
+(select distinct(physical_activity_level) from diabetes)</sql><sql name="social_media_usage.sql">create table social_media_usage as
+
+select social_media_usage, 
+
+ROW_NUMBER() 
+
+OVER(order by (
+
+case when social_media_usage = 'Unknown' then 0 
+
+when social_media_usage = 'Never' then 1
+
+when social_media_usage = 'Occasionally' then 2
+
+when social_media_usage = 'Moderate' then 3
+
+when social_media_usage = 'Excessive' then 4
+
+else 5 end)) as id
+
+from 
+
+(select distinct(social_media_usage) from diabetes)</sql><sql name="star_sign_table.sql">create table star_sign as 
+
+select star_sign, 
+
+ROW_NUMBER() OVER(order by (case when star_sign = 'Unknown' then 0 else 1 end)) as id
+
+from 
+
+(select distinct(star_sign) from diabetes)</sql><sql name="stress_level.sql">create table stress_level as
+
+select stress_level, 
+
+ROW_NUMBER() 
+
+OVER(order by (
+
+case when stress_level = 'Unknown' then 0 
+
+when stress_level = 'Low' then 1
+
+when stress_level = 'Moderate' then 2
+
+when stress_level = 'Elevated' then 3
+
+when stress_level = 'Extreme' then 4
+
+else 5 end)) as id
+
+from 
+
+(select distinct(stress_level) from diabetes)</sql><sql name="fact_table.sql">create table fact_table as
+
+select d.id, g.id as gender_id, hypertension, diabetes_pedigree_function, &quot;BMI&quot;,
+dt.id as diet_type_id, ss.id as star_sign_id, family_diabetes_history,
+smu.id as social_media_usage_id, pal.id as physical_activity_level_id,
+sleep_duration, sl.id as stress_level_id, pregnancies, ac.id as alcohol_consumption_id,
+ag.id as age_group_id, weight, diabetes
+
+from
+
+diabetes d inner join gender g on d.gender = g.gender
+
+inner join diet_type as dt on d.diet_type = dt.diet_type
+
+inner join star_sign ss on d.star_sign = ss.star_sign
+
+inner join social_media_usage smu on d.social_media_usage = smu.social_media_usage
+
+inner join physical_activity_level pal on d.physical_activity_level = pal.physical_activity_level
+
+inner join stress_level sl on d.stress_level = sl.stress_level
+
+inner join age_group ag on d.age_group = ag.age_group
+
+inner join alcohol_consumption ac on d.alcohol_consumption = ac.alcohol_consumption
+
+</sql><sql name="SQL 15">CREATE VIEW age_group as 
+
+select * from age_group</sql><current_tab id="9"/></tab_sql></sqlb_project>
